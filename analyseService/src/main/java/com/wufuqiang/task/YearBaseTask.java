@@ -37,7 +37,7 @@ public class YearBaseTask {
                 Document doc = MongoUtils.findoneby("yearbasestatics","UserPortrait",yeartype) ;
                 if(doc == null){
                     doc = new Document() ;
-                    doc.put("yearbasetype",yeartype) ;
+                    doc.put("info",yeartype) ;
                     doc.put("count",count) ;
                 }else{
                     Long countpre = doc.getLong("count") ;
@@ -47,7 +47,7 @@ public class YearBaseTask {
                 MongoUtils.saveorupdatemongo("yearbasestatics","UserPortrait",doc);
 
             }
-            env.execute("year base") ;
+            env.execute("year base analyse") ;
         } catch (Exception e) {
             e.printStackTrace();
         }

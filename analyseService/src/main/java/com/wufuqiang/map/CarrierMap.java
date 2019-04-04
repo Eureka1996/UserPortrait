@@ -1,9 +1,7 @@
 package com.wufuqiang.map;
 
 import com.wufuqiang.entity.CarrierInfo;
-import com.wufuqiang.entity.YearBase;
 import com.wufuqiang.util.CarrierUtils;
-import com.wufuqiang.util.DateUtils;
 import com.wufuqiang.util.HBaseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -34,7 +32,7 @@ public class CarrierMap implements MapFunction<String,CarrierInfo> {
         String tablename = "userflaginfo" ;
         String rowkey = userid ;
         String familyname =  "baseinfo";
-        String column = "yearbase" ;
+        String column = "carrierinfo" ;   //运营商
         HBaseUtils.putdata(tablename,rowkey,familyname,column,carrier);
 
         return new CarrierInfo(carrier,1L,"yearbase=="+carrier);
