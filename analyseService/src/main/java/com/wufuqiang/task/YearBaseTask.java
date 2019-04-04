@@ -1,11 +1,14 @@
 package com.wufuqiang.task;
 
+import com.mongodb.Mongo;
 import com.wufuqiang.entity.YearBase;
 import com.wufuqiang.map.YearBaseMap;
 import com.wufuqiang.reduce.YearBaseReduce;
+import com.wufuqiang.util.MongoUtils;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.bson.Document;
 
 import java.util.List;
 
@@ -27,14 +30,27 @@ public class YearBaseTask {
 
         try {
             List<YearBase> resultList = reduceResult.collect() ;
+
+            for(YearBase yearBase : resultList){
+                String yeartype = yearBase.getYeartype() ;
+                Long count = yearBase.getCount() ;
+                Document doc = MongoUtils.findoneby("yearbasestatics","UserPortrait",yeartype) ;
+                if(doc == null){
+                    doc = new Document() ;
+                    doc.put("yearbasetype",yeartype) ;
+                    doc.put("count",count) ;
+                }else{
+                    Long countpre = doc.getLong("count") ;
+                    Long total = countpre + count ;
+                    doc.put("count",total) ;
+                }
+                MongoUtils.saveorupdatemongo("yearbasestatics","UserPortrait",doc);
+
+            }
+            env.execute("year base") ;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try {
-            env.execute() ;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -51,7 +51,6 @@ public class MongoUtils {
             try {
                 System.out.println("come into saveorupdatemongo ---- update---"+ JSONObject.toJSONString(doc));
             } catch (Exception e) {
-// TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }else{
@@ -59,7 +58,6 @@ public class MongoUtils {
             try {
                 System.out.println("come into saveorupdatemongo ---- insert---"+JSONObject.toJSONString(doc));
             }catch (Exception e) {
-// TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
