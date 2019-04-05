@@ -1,19 +1,21 @@
 package com.wufuqiang.map;
 
-import com.wufuqiang.entity.CarrierInfo;
-import com.wufuqiang.util.CarrierUtils;
+import com.wufuqiang.entity.EmailInfo;
+import com.wufuqiang.entity.YearBase;
+import com.wufuqiang.util.DateUtils;
+import com.wufuqiang.util.EmailUtils;
 import com.wufuqiang.util.HBaseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.functions.MapFunction;
 
 /**
  * @ author wufuqiang
- * @ date 2019/4/4/004 - 19:46
+ * @ date 2019/4/4/004 - 14:42
  **/
-public class CarrierMap implements MapFunction<String,CarrierInfo> {
-    @Override
-    public CarrierInfo map(String str) throws Exception {
+public class EmailMap implements MapFunction<String,EmailInfo> {
 
+    @Override
+    public EmailInfo map(String str) throws Exception {
         if(StringUtils.isBlank(str)){
             return null ;
         }
@@ -27,14 +29,13 @@ public class CarrierMap implements MapFunction<String,CarrierInfo> {
         String registerTime = infos[6] ;
         String usetype = infos[7] ;
 
-        Integer carriertype = CarrierUtils.getCarrierByTel(telphone);
-        String carrier = carriertype == 0 ? "未知":carriertype==1?"移动用户":carriertype==2?"联通用户":"电信用户" ;
+        String emailtype = EmailUtils.getEmailtypeBy(email);
         String tablename = "userflaginfo" ;
         String rowkey = userid ;
         String familyname =  "baseinfo";
-        String column = "carrierinfo" ;   //运营商
-        HBaseUtils.putdata(tablename,rowkey,familyname,column,carrier);
+        String column = "emailinfo" ;
+        HBaseUtils.putdata(tablename,rowkey,familyname,column,emailtype);
 
-        return new CarrierInfo(carrier,1L,"carrier=="+carrier);
+        return new EmailInfo(emailtype,1L,"emailtype=="+emailtype);
     }
 }
