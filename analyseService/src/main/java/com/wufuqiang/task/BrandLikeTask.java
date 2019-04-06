@@ -5,6 +5,7 @@ import com.wufuqiang.kafka.KafkaEvent;
 import com.wufuqiang.kafka.KafkaEventSchema;
 import com.wufuqiang.map.BrandLikeMap;
 import com.wufuqiang.reduce.BrandLikeReduce;
+import com.wufuqiang.sink.BrandLikeSink;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -55,7 +56,7 @@ public class BrandLikeTask {
         brandLikeReduce.addSink(new BrandLikeSink());
 
         try {
-            env.execute("brandLike analy");
+            env.execute("brandLike analyse");
         } catch (Exception e) {
             e.printStackTrace();
         }

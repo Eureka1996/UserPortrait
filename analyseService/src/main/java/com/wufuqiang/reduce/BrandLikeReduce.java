@@ -10,6 +10,6 @@ import org.apache.flink.api.common.functions.ReduceFunction;
 public class BrandLikeReduce implements ReduceFunction<BrandLike> {
     @Override
     public BrandLike reduce(BrandLike brandLike, BrandLike t1) throws Exception {
-        return null;
+        return new BrandLike(brandLike.getBrand(),brandLike.getCount()+t1.getCount(),brandLike.getGroupbyfield()) ;
     }
 }

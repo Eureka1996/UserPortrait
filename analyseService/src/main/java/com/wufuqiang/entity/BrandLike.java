@@ -9,6 +9,15 @@ public class BrandLike {
     private long count;
     private String groupbyfield;
 
+    public BrandLike() {
+    }
+
+    public BrandLike(String brand, long count, String groupbyfield) {
+        this.brand = brand;
+        this.count = count;
+        this.groupbyfield = groupbyfield;
+    }
+
     public String getGroupbyfield() {
         return groupbyfield;
     }
