@@ -33,7 +33,7 @@ public class BrandLikeMap implements FlatMapFunction<KafkaEvent,BrandLike> {
         String famliyname = "userbehavior";
         String colunm = "brandlist";     //品牌列表
 
-        //HBase中以map格式存放用户购买过的品牌名称{count:count}
+        //HBase中以map格式存放用户购买过的品牌名称{brand:count}
         String mapdata = HBaseUtils.getdata(tablename,rowkey,famliyname,colunm);
 
 
@@ -66,9 +66,9 @@ public class BrandLikeMap implements FlatMapFunction<KafkaEvent,BrandLike> {
         BrandLike brandLike = new BrandLike();
         brandLike.setBrand(maxbrand);
         brandLike.setCount(1L);
+        brandLike.setGroupbyfield("brandlike=="+maxbrand);
         collector.collect(brandLike);
 
-        brandLike.setGroupbyfield("brandlike=="+maxbrand);
         colunm = "brandlike"; //偏好的品牌
         HBaseUtils.putdata(tablename,rowkey,famliyname,colunm,maxbrand);
 
