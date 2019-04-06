@@ -6,32 +6,22 @@ import java.io.Serializable;
  * @ author wufuqiang
  * @ date 2019/4/5/005 - 14:23
  **/
-public class CollectProductLog implements Serializable {
+public class ScanProductLog implements Serializable {
     private int productid ; //商品id
     private int producttypeid ; //商品类别id
-    private String operatortime ; //操作时间
-
-    private int operatortype ; //操作类型：0-收藏，1-取消
-
-
+    private String scantime ; //浏览时间
+    private String staytime ; //停留时间
     private int userid ; //用户id
     private int usetype ; // 终端类型：0-pc端，1-移动端，2-小程序端
     private String ip ; // 用户ip
+    private String brand ; //品牌
 
-    public String getOperatortime() {
-        return operatortime;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setOperatortime(String operatortime) {
-        this.operatortime = operatortime;
-    }
-
-    public int getOperatortype() {
-        return operatortype;
-    }
-
-    public void setOperatortype(int operatortype) {
-        this.operatortype = operatortype;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public int getProductid() {
@@ -48,6 +38,22 @@ public class CollectProductLog implements Serializable {
 
     public void setProducttypeid(int producttypeid) {
         this.producttypeid = producttypeid;
+    }
+
+    public String getScantime() {
+        return scantime;
+    }
+
+    public void setScantime(String scantime) {
+        this.scantime = scantime;
+    }
+
+    public String getStaytime() {
+        return staytime;
+    }
+
+    public void setStaytime(String staytime) {
+        this.staytime = staytime;
     }
 
     public int getUserid() {

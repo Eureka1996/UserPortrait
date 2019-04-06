@@ -31,7 +31,6 @@
     <orderEntry type="library" name="Maven: org.apache.flink:flink-shaded-jackson:2.7.9-5.0" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.19.0-GA" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-actor_2.11:2.4.20" level="project" />
-    <orderEntry type="library" name="Maven: com.typesafe:config:1.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.scala-lang.modules:scala-java8-compat_2.11:0.7.0" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-stream_2.11:2.4.20" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.0" level="project" />
@@ -159,6 +158,14 @@
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:bson:3.4.3" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.47" level="project" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="library" name="Maven: com.typesafe:config:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-connector-kafka-0.10_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-connector-kafka-0.9_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-connector-kafka-base_2.11:1.7.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:0.10.2.1" level="project" />
+    <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-streaming-scala_2.11:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.15" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.flink:flink-test-utils-junit:1.7.2" level="project" />

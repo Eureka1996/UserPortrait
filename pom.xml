@@ -12,6 +12,7 @@
         <module>analyseService</module>
         <module>registerCenter</module>
         <module>infoinService</module>
+        <module>common</module>
     </modules>
 
 

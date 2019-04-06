@@ -17,6 +17,15 @@ public class BuyCarProductLog implements Serializable {
     private int userid ; //用户id
     private int usetype ; // 终端类型：0-pc端，1-移动端，2-小程序端
     private String ip ; // 用户ip
+    private String brand ; //品牌
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
     public String getOperatortime() {
         return operatortime;

@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="analyseService" />
+        <module name="common" />
         <module name="infoinService" />
         <module name="registerCenter" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="analyseService" target="1.8" />
+      <module name="common" target="1.5" />
       <module name="infoinService" target="1.8" />
       <module name="registerCenter" target="1.8" />
       <module name="UserPortrait" target="1.5" />
