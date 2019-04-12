@@ -1,11 +1,15 @@
 package com.wufuqiang.task;
 
 import com.wufuqiang.entity.BrandLike;
+import com.wufuqiang.entity.UsertypeInfo;
 import com.wufuqiang.kafka.KafkaEvent;
 import com.wufuqiang.kafka.KafkaEventSchema;
 import com.wufuqiang.map.BrandLikeMap;
+import com.wufuqiang.map.UsertypeMap;
 import com.wufuqiang.reduce.BrandLikeReduce;
+import com.wufuqiang.reduce.UsertypeReduce;
 import com.wufuqiang.sink.BrandLikeSink;
+import com.wufuqiang.sink.UsertypeSink;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -32,7 +36,7 @@ public class UsertypeTask {
                 "--zookeeper.connect",
                 "10-255-0-197:2181,10-255-0-192:2181,10-255-0-253:2181",
                 "--group.id",
-                "branklike"};
+                "usertype"};
         final ParameterTool parameterTool = ParameterTool.fromArgs(args);
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment() ;
@@ -49,14 +53,14 @@ public class UsertypeTask {
                                 new KafkaEventSchema(),
                                 parameterTool.getProperties())
                                 .assignTimestampsAndWatermarks(new CustomWatermarkExtractor()));
-        DataStream<BrandLike> brandLikeMap = input.flatMap(new BrandLikeMap());
+        DataStream<UsertypeInfo> usertypeInfoMap = input.flatMap(new UsertypeMap());
 
-        DataStream<BrandLike> brandLikeReduce = brandLikeMap.keyBy("groupbyfield").timeWindowAll(Time.seconds(2)).reduce(new BrandLikeReduce());
+        DataStream<UsertypeInfo> usertypeInfoReduce = usertypeInfoMap.keyBy("groupbyfield").timeWindowAll(Time.seconds(2)).reduce(new UsertypeReduce());
 
-        brandLikeReduce.addSink(new BrandLikeSink());
+        usertypeInfoReduce.addSink(new UsertypeSink());
 
         try {
-            env.execute("brandLike analyse");
+            env.execute("usertype analyse");
         } catch (Exception e) {
             e.printStackTrace();
         }

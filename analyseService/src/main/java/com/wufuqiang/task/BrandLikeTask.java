@@ -28,7 +28,7 @@ public class BrandLikeTask {
         args = new String[]{"--input-topic",
                 "scanProductLog",
                 "--bootstrap.servers",
-                "10-255-0-242:9092,10-255-0-139:9092,10-255-0-197:2181",
+                "10-255-0-242:9092,10-255-0-139:9092,10-255-0-197:9092",
                 "--zookeeper.connect",
                 "10-255-0-197:2181,10-255-0-192:2181,10-255-0-253:2181",
                 "--group.id",
