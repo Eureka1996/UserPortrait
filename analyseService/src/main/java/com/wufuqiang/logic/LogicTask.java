@@ -2,14 +2,16 @@ package com.wufuqiang.logic;
 
 import com.wufuqiang.entity.CarrierInfo;
 import com.wufuqiang.map.CarrierMap;
+import com.wufuqiang.map.LogicMap;
 import com.wufuqiang.reduce.CarrierReduce;
+import com.wufuqiang.reduce.LogicReduce;
 import com.wufuqiang.util.MongoUtils;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.bson.Document;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @ author wufuqiang
@@ -23,27 +25,39 @@ public class LogicTask {
 
         DataSet<String> text = env.readTextFile(params.get("input")) ;
 
-        DataSet<CarrierInfo> mapResult = text.map(new CarrierMap()) ;
-        DataSet<CarrierInfo> reduceResult = mapResult.groupBy("groupfield").reduce(new CarrierReduce()) ;
+        DataSet<LogicInfo> mapResult = text.map(new LogicMap()) ;
+        DataSet<ArrayList<Double>> reduceResult = mapResult.groupBy("groupfield").reduceGroup(new LogicReduce()) ;
 
         try {
-            List<CarrierInfo> resultList = reduceResult.collect() ;
-            for(CarrierInfo carrierInfo : resultList){
-                String carrier = carrierInfo.getCarrier() ;
-                Long count = carrierInfo.getCount() ;
-                Document doc = MongoUtils.findoneby("carrierstatics","UserPortrait",carrier) ;
-                if(doc == null){
-                    doc = new Document() ;
-                    doc.put("info",carrier) ;
-                    doc.put("count",count) ;
-                }else{
-                    Long countpre = doc.getLong("count") ;
-                    Long total = countpre + count ;
-                    doc.put("count",total) ;
+            List<ArrayList<Double>> resultList = reduceResult.collect() ;
+            int groupsize = resultList.size() ;
+
+            Map<Integer,Double> summap = new TreeMap<Integer,Double>(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o1.compareTo(o2);
                 }
-                MongoUtils.saveorupdatemongo("carrierstatics","UserPortrait",doc);
+            });
+
+            for(ArrayList<Double> array : resultList){
+
+                for(Double dou:array){
+                    for(int i=0;i<array.size() ;i++){
+                        double pre = summap.get(i)==null?0d:summap.get(i);
+                        summap.put(i,pre+array.get(i));
+                    }
+                }
 
             }
+
+            ArrayList<Double> finalweight = new ArrayList<Double>();
+            for(Map.Entry<Integer,Double> mapentry :summap.entrySet()){
+                Integer key = mapentry.getKey();
+                Double sumvalue = mapentry.getValue();
+                double finalvalue = sumvalue/groupsize;
+                finalweight.add(finalvalue);
+            }
+
             env.execute("carrier analyse") ;
         } catch (Exception e) {
             e.printStackTrace();
